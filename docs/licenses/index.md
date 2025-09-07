@@ -1,7 +1,6 @@
----
+--- 
 title: Licenses
-description: Information about the licenses used in this project.
----
+--- 
 
 # Licenses
-All the licenses used in this project are listed below:
+This section provides information about the licenses used in this project. Each license is described in detail on its own page.
