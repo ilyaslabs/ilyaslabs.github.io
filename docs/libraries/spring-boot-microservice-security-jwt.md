@@ -9,8 +9,8 @@ Want secure APIs without spending hours on boilerplate? This starter gives you J
 
 ## What you get
 
-- JWT access token generation
-- Refresh token generation
+- JWT access token generation (`Jwt` object)
+- Refresh token generation (`Jwt` object)
 - Automatic JWT validation in secured endpoints
 - Scope/authority-based endpoint protection
 - Custom claims support
@@ -30,7 +30,7 @@ Want secure APIs without spending hours on boilerplate? This starter gives you J
 </dependency>
 ```
 
-> Tip: check the repository releases/tags and use the latest available version.
+> Tip: check repository releases/tags and use the latest available version.
 
 ### 2) Generate RSA key pair
 
@@ -58,26 +58,35 @@ io:
 
 > You can also inline PEM key text in YAML, but classpath files are cleaner for most projects.
 
-### 4) Generate a token in your auth endpoint
+### 4) Generate tokens in your auth endpoint
+
+Use `JwtTokenService` (updated API):
 
 ```java
-String token = authService.generateToken(
-    "user",                       // subject
-    "https://your-domain.com",   // issuer
-    Map.of("tenant", "acme"),   // custom claims (optional)
-    List.of("ADMIN")              // scopes
+@Autowired
+private JwtTokenService jwtTokenService;
+
+Jwt accessJwt = jwtTokenService.generateToken(
+    "user",                      // subject
+    "https://your-domain.com",  // issuer
+    Map.of("tenant", "acme"),  // custom claims (optional)
+    List.of("ADMIN")             // scopes
 );
+
+String accessToken = accessJwt.getTokenValue();
 ```
 
 Generate refresh token:
 
 ```java
-String refreshToken = authService.generateRefreshToken(
+Jwt refreshJwt = jwtTokenService.generateRefreshToken(
     "user",
     "https://your-domain.com",
     null,
     null
 );
+
+String refreshToken = refreshJwt.getTokenValue();
 ```
 
 ### 5) Call secured APIs
@@ -114,7 +123,7 @@ io:
 ### Read JWT claims from current request
 
 ```java
-authService.getAuthenticatedPrincipal();
+jwtTokenService.getAuthenticatedPrincipal();
 ```
 
 Returns `org.springframework.security.oauth2.jwt.Jwt` (token + claims).
