@@ -26,7 +26,7 @@ Want secure APIs without spending hours on boilerplate? This starter gives you J
 <dependency>
   <groupId>io.github.ilyaslabs</groupId>
   <artifactId>spring-boot-microservice-security-jwt</artifactId>
-  <version>1.0.0</version>
+  <version>3.1.0</version>
 </dependency>
 ```
 
